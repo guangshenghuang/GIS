@@ -19,4 +19,19 @@ gender_difference <- gender_omit %>%
 gender_spatial <- world_omit %>% 
   left_join(gender_difference,by=c("country"="country"))
 
+## create map
 
+library(tmap)
+
+# check gender_spatial
+summary(gender_spatial$difference)
+
+# set breaks for map
+
+gender_map <- tm_shape(gender_spatial) + 
+  tm_polygons("difference",
+              style="pretty", 
+              palette="Bu") + 
+  tm_layout(frame=FALSE, legend.outside = TRUE)
+
+gender_map
